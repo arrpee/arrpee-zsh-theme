@@ -1,20 +1,28 @@
-# Directory info.
-current_dir='${PWD/#$HOME/~}'
-git_info='$(git_prompt_info)'
+# Prompt symbol
+top_prompt_symbol() {
+    echo -n '%(?:%{$fg[green]%}╭─:%{$fg[red]%}╭─)%{$reset_color%}'
+}
 
-# Lineup/down
-_lineup=$'\e[1A'
-_linedown=$'\e[1B'
+bottom_prompt_symbol() {
+    echo -n '%(?:%{$fg[green]%}╰─➤:%{$fg[red]%}╰─➤)%{$reset_color%} '
+}
 
-ZSH_THEME_GIT_PROMPT_PREFIX="on %{$reset_color%}%{$fg[cyan]%}"
+# User info
+current_user() {
+    echo -n '[%{$fg_bold[cyan]%}%n%{$reset_color%}]'
+
+}
+
+# Directory info
+current_directory() {
+    echo -n ' in %{$fg_bold[yellow]%}[${PWD/#$HOME/~}]%{$reset_color%}'
+}
+
+
+ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN=":%{$fg[green]%} ▲"
-ZSH_THEME_GIT_PROMPT_DIRTY=":%{$fg[red]%} △"
+ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_GIT_PROMPT_DIRTY=""
 
-PROMPT="%{$fg[blue]%}%m %{$reset_color%}» \
-%{$fg[cyan]%}%n \
-%{$fg[white]%}in \
-%{$fg_bold[cyan]%}[${current_dir}]%{$reset_color%}%{$reset_color%} \
-${git_info}%{$reset_color%}
-%{$fg[magenta]%}[%*] \
-%{$fg[white]%}%{$reset_color%} "
+PROMPT="$(top_prompt_symbol)$(current_user)$(current_directory)$(git_prompt_info)
+$(bottom_prompt_symbol)"
