@@ -4,7 +4,7 @@ top_prompt_symbol() {
 }
 
 bottom_prompt_symbol() {
-    echo -n '%(?:%{$fg[green]%}╰─➤:%{$fg[red]%}╰─➤)%{$reset_color%} '
+    echo -n '%(?:%{$fg[green]%}╰─➤:%{$fg[red]%}╰─➤)%{$reset_color%}'
 }
 
 # User info
@@ -18,11 +18,18 @@ current_directory() {
     echo -n ' in %{$fg_bold[yellow]%}[${PWD/#$HOME/~}]%{$reset_color%}'
 }
 
+# Directory info
+current_virtualenv() {
+    echo '$(virtualenv_prompt_info)'
+}
+
+ZSH_THEME_VIRTUALENV_PREFIX=" with %{$fg[magenta]%}λ:"
+ZSH_THEME_VIRTUALENV_SUFFIX="%{$reset_color%}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_DIRTY=""
 
-PROMPT="$(top_prompt_symbol)$(current_user)$(current_directory)$(git_prompt_info)
-$(bottom_prompt_symbol)"
+PROMPT="$(top_prompt_symbol)$(current_user)$(current_directory)$(git_prompt_info)$(current_virtualenv)
+$(bottom_prompt_symbol) "
